@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>School Maps</title>
     <link rel="stylesheet" href="css/style.css">
+    
 </head>
 <body>
-    <header>
+    <header class="flex justify-between items-center px-8 py-4 bg-white shadow-md">
         <div class="logo">
-            <h1>School Maps</h1>
+            <h1 class="text-2xl font-bold text-blue-600">School Maps</h1>
         </div>
 
-        <div class="search"></div>
-        <div class="profile"></div>
+        <div class="search">
+            <input type="search" placeholder="Search Building..." class="border rounded-lg px-4 py-2 w-80">
+        </div>
+        <div class="profile">
+            <span class="font-medium">Guest</span>
+        </div>
     </header>
-q
+
     <main>
-        <section></section>
-        <aside></aside>
+        <section class="map-container"></section>
+        <aside class="building-info"></aside>
     </main>
 
     <script src="js/script.js"></script>
