@@ -1,0 +1,276 @@
+/* ======================================================
+   GREEN VALLEY SCHOOL MAPS
+   Custom CSS
+   ====================================================== */
+
+/* ===========================
+   COLOR VARIABLES
+=========================== */
+
+:root{
+
+    --primary:#15803d;
+    --primary-dark:#166534;
+    --primary-light:#dcfce7;
+
+    --background:#f8fafc;
+
+    --text:#1f2937;
+
+}
+
+/* ===========================
+   GENERAL
+=========================== */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    overflow:hidden;
+
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+header{
+
+    transition:.3s;
+
+}
+
+/* ===========================
+   LOGO
+=========================== */
+
+.logo{
+
+    user-select:none;
+
+}
+
+.logo h1{
+
+    letter-spacing:.5px;
+
+}
+
+/* ===========================
+   SEARCH
+=========================== */
+
+.search input{
+
+    transition:.25s;
+
+}
+
+.search input::placeholder{
+
+    color:#9ca3af;
+
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+button{
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+button:active{
+
+    transform:scale(.96);
+
+}
+
+/* ===========================
+   MAP
+=========================== */
+
+.campus-map{
+
+    position:relative;
+
+    background-image:
+
+    radial-gradient(#dbeafe 1px, transparent 1px);
+
+    background-size:30px 30px;
+
+}
+
+/* ===========================
+   BUILDING IMAGE
+=========================== */
+
+.building-image{
+
+    transition:.3s;
+
+}
+
+.building-image:hover{
+
+    transform:scale(1.02);
+
+}
+
+/* ===========================
+   NAVIGATION BUTTON
+=========================== */
+
+.navigate{
+
+    transition:.3s;
+
+}
+
+.navigate:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#94a3b8;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f8fafc;
+
+}
+
+/* ===========================
+   CARD ANIMATION
+=========================== */
+
+.building-info{
+
+    animation:fade .35s ease;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+/* ===========================
+   MAP ZOOM BUTTONS
+=========================== */
+
+.campus-map button{
+
+    transition:.25s;
+
+}
+
+.campus-map button:hover{
+
+    transform:scale(1.08);
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:1024px){
+
+    .building-info{
+
+        width:320px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    body{
+
+        overflow:auto;
+
+    }
+
+    main{
+
+        flex-direction:column;
+
+        height:auto !important;
+
+    }
+
+    .building-info{
+
+        width:100%;
+
+        border-left:none;
+
+        border-top:1px solid #e5e7eb;
+
+    }
+
+    .search input{
+
+        width:220px;
+
+    }
+
+}
