@@ -22,7 +22,7 @@
 
     <!-- ================= HEADER ================= -->
 
-    <header class="flex justify-between items-center px-8 py-4 bg-white  z-10">
+    <header class="sticky top-0 z-50 flex justify-between items-center px-8 py-4 bg-white shadow-sm border-b border-gray-100">
 
         <div class="logo flex items-center gap-3">
 
@@ -44,25 +44,24 @@
 
         <!-- Search -->
 
-        <div class="search relative w-96">
-    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+        <div class="search relative w-1/2 group">
+    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 transition duration-300 group-hover:text-green-600"></i>
 
     <input type="search" placeholder="Search for a building..." class="w-full h-12 pl-11 pr-4 rounded-full bg-white border border-gray-200 
-        focus:outline-none focus:ring-2 focus:ring-green-500
-        focus:border-green-500 transition-all duration-300
-        placeholder:text-gray-400">
+        shadow-md hover:shadow-lg hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 placeholder:text-gray-400">
     </div>
 
         <!-- Profile -->
 
         <div class="profile flex items-center gap-3">
 
-            <button
-                class="text-gray-500 hover:text-green-700 p-2 rounded-full transition">
+            <div class="relative">
+                <button class="text-gray-500 hover:text-green-700 p-2 rounded-full transition">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+                <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
 
-                <i class="fa-solid fa-bell"></i>
-
-            </button>
+            </div>
 
             <div
                 class="w-8 h-8 rounded-full bg-green-100 text-green-700 font-bold flex items-center justify-center border border-green-200">
@@ -145,11 +144,7 @@
 
                     </p>
 
-                    <p class="text-sm">
-
-                        Click the buttons above.
-
-                    </p>
+                    <p class="text-sm">Click the buttons above.</p>
 
                 </div>
 
