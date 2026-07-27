@@ -1,19 +1,19 @@
-import Navbar from "@/components/Navbar";
-import SearchBar from "@/components/searchBar";
-import Map from "@/components/map";
-import BuildingCard from "@/components/buildingCard";
-import Footer from "@/components/footer";
+import NavigationBar from "@/components/NavigationBar";
+import Search from "@/components/Search";
+import Maps from "@/components/Maps";
+import BuildingList from "@/components/BuildingList"
+import Footers from "@/components/Footers";
 
 export default function Home() {
   return (
     <main>
-      <Navbar />
-      <SearchBar />
-      <Map />
-      <BuildingCard />
-      <Footer />
+      <NavigationBar />
+      <Search />
+      <Maps />
+      <BuildingList />
+      <Footers />
 
-      <h1>School Maps</h1>
+      <h1>Welcome to My App</h1>
     </main>
   );
 }

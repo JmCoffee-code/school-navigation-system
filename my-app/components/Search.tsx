@@ -1,5 +1,5 @@
 
-export default function SearchBar() {
+export default function Search() {
     return (
         <div>
             Search Bar
