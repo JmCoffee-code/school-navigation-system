@@ -1,120 +1,191 @@
 import {
-   FaSearch,
+   FaCompass,
    FaLocationArrow,
    FaRoute,
-   FaRedo,
    FaBuilding,
    FaParking,
    FaStar,
-   FaQuestionCircle,
-   FaCalendarAlt,
-   FaExclamationTriangle
+   FaCog,
 } from "react-icons/fa";
 
 export default function MapToolbars() {
+
    return (
-      <aside className="w-72 bg-white rounded-2xl shadow-md p-5">
 
-         {/* Search */}
+      <aside
+         className="
+            w-72
+            bg-white
+            rounded-2xl
+            border
+            border-gray-200
+            shadow-md
+            overflow-hidden
+         "
+      >
 
-         <div className="relative mb-6">
+         <div className="p-6 border-b">
 
-            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"/>
+            <h2
+               className="
+                  text-xl
+                  font-bold
+                  text-green-700
+               "
+            >
 
-            <input
-               type="text"
-               placeholder="Search building..."
-               className="w-full rounded-xl border px-11 py-3 focus:outline-none focus:ring-2 focus:ring-green-600"
-            />
+               Navigation
+
+            </h2>
+
+            <p className="text-sm text-gray-500">
+
+               Campus Explorer
+
+            </p>
 
          </div>
 
-         {/* Navigation */}
+         <div className="p-4 space-y-8">
 
-         <ToolbarSection title="Navigation">
+            <section>
 
-            <ToolbarButton icon={<FaLocationArrow />} text="Current Location"/>
+               <h3
+                  className="
+                     mb-3
+                     text-xs
+                     uppercase
+                     tracking-wider
+                     text-gray-400
+                  "
+               >
 
-            <ToolbarButton icon={<FaRoute />} text="Get Directions"/>
+                  Navigation
 
-            <ToolbarButton icon={<FaRedo />} text="Reset View"/>
+               </h3>
 
-         </ToolbarSection>
+               <ToolbarButton
+                  icon={<FaLocationArrow />}
+                  text="Current Location"
+               />
 
-         {/* Explore */}
+               <ToolbarButton
+                  icon={<FaRoute />}
+                  text="Directions"
+               />
 
-         <ToolbarSection title="Explore">
+               <ToolbarButton
+                  icon={<FaCompass />}
+                  text="Compass"
+               />
 
-            <ToolbarButton icon={<FaBuilding />} text="Buildings"/>
+            </section>
 
-            <ToolbarButton icon={<FaParking />} text="Parking"/>
+            <section>
 
-            <ToolbarButton icon={<FaStar />} text="Favorites"/>
+               <h3
+                  className="
+                     mb-3
+                     text-xs
+                     uppercase
+                     tracking-wider
+                     text-gray-400
+                  "
+               >
 
-         </ToolbarSection>
+                  Explore
 
-         {/* Quick */}
+               </h3>
 
-         <ToolbarSection title="Quick Actions">
+               <ToolbarButton
+                  icon={<FaBuilding />}
+                  text="Buildings"
+               />
 
-            <ToolbarButton icon={<FaCalendarAlt />} text="Class Schedule"/>
+               <ToolbarButton
+                  icon={<FaParking />}
+                  text="Parking"
+               />
 
-            <ToolbarButton icon={<FaExclamationTriangle />} text="Emergency"/>
+               <ToolbarButton
+                  icon={<FaStar />}
+                  text="Favorites"
+               />
 
-            <ToolbarButton icon={<FaQuestionCircle />} text="Help"/>
+            </section>
 
-         </ToolbarSection>
+            <section>
+
+               <h3
+                  className="
+                     mb-3
+                     text-xs
+                     uppercase
+                     tracking-wider
+                     text-gray-400
+                  "
+               >
+
+                  Settings
+
+               </h3>
+
+               <ToolbarButton
+                  icon={<FaCog />}
+                  text="Preferences"
+               />
+
+            </section>
+
+         </div>
 
       </aside>
+
    );
 }
 
-function ToolbarSection({
-   title,
-   children,
-}: {
-   title: string;
-   children: React.ReactNode;
-}) {
-   return (
-      <div className="mb-6">
-
-         <h3 className="text-xs uppercase tracking-wider text-gray-400 font-semibold mb-2">
-            {title}
-         </h3>
-
-         <div className="space-y-1">
-            {children}
-         </div>
-
-      </div>
-   );
+interface ToolbarButtonProps {
+   icon: React.ReactNode;
+   text: string;
 }
 
 function ToolbarButton({
    icon,
    text,
-}: {
-   icon: React.ReactNode;
-   text: string;
-}) {
+}: ToolbarButtonProps) {
+
    return (
+
       <button
          className="
-            w-full
+            mb-2
             flex
+            w-full
             items-center
             gap-3
-            rounded-lg
-            px-3
+            rounded-xl
+            px-4
             py-3
+            text-gray-700
+            transition
             hover:bg-green-50
             hover:text-green-700
-            transition
          "
       >
-         <span>{icon}</span>
-         <span>{text}</span>
+
+         <span className="text-lg">
+
+            {icon}
+
+         </span>
+
+         <span className="font-medium">
+
+            {text}
+
+         </span>
+
       </button>
+
    );
 }

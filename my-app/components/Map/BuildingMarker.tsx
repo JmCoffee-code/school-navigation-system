@@ -1,6 +1,6 @@
 import { Building } from "@/types/building";
 
-interface Props {
+interface BuildingMarkerProps {
    building: Building;
    selected: boolean;
    onClick: () => void;
@@ -10,7 +10,7 @@ export default function BuildingMarker({
    building,
    selected,
    onClick,
-}: Props) {
+}: BuildingMarkerProps) {
    return (
       <button
          onClick={onClick}
@@ -21,45 +21,75 @@ export default function BuildingMarker({
             transform: "translate(-50%, -50%)",
          }}
       >
+         {/* Pulse Ring */}
+
+         {selected && (
+            <div
+               className="
+                  absolute
+                  left-1/2
+                  top-1/2
+                  h-10
+                  w-10
+                  -translate-x-1/2
+                  -translate-y-1/2
+                  animate-ping
+                  rounded-full
+                  bg-green-400
+                  opacity-30
+               "
+            />
+         )}
+
+         {/* Marker */}
+
          <div
             className={`
-               w-5
-               h-5
+               relative
+               flex
+               h-6
+               w-6
+               items-center
+               justify-center
                rounded-full
                border-4
                border-white
-               shadow-lg
+               shadow-xl
                transition-all
-               duration-200
+               duration-300
 
                ${
                   selected
-                     ? "bg-green-600 scale-125"
-                     : "bg-red-600 hover:scale-110"
+                     ? "scale-125 bg-green-600"
+                     : "bg-red-500 hover:scale-110"
                }
             `}
          />
 
-         <span
+         {/* Label */}
+
+         <div
             className="
                absolute
-               top-7
                left-1/2
+               top-9
                -translate-x-1/2
-               whitespace-nowrap
-               rounded-md
+               rounded-lg
                bg-white
-               px-2
-               py-1
+               px-3
+               py-2
                text-xs
-               shadow
+               font-semibold
+               shadow-lg
                opacity-0
-               group-hover:opacity-100
                transition
+               group-hover:opacity-100
+               whitespace-nowrap
             "
          >
             {building.name}
-         </span>
+         </div>
+
       </button>
    );
 }
