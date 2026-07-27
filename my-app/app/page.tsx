@@ -4,18 +4,25 @@ import CampusMaps from "@/components/Map/CampusMaps";
 import BuildingInfos from "@/components/Map/BuildingInfos";
 
 export default function Home() {
-  return (
-    <>
-      <NavigationBar />
+   return (
+      <div className="h-screen flex flex-col">
 
-      <main className="flex">
-        <div className="flex-1">
-          <MapToolbars />
-          <CampusMaps />
-        </div>
+         <NavigationBar />
 
-        <BuildingInfos />
-      </main>
-    </>
-  );
+         <main className="flex flex-1 overflow-hidden">
+
+            <div className="flex flex-col flex-1">
+
+               <MapToolbars />
+
+               <CampusMaps />
+
+            </div>
+
+            <BuildingInfos />
+
+         </main>
+
+      </div>
+   );
 }
