@@ -1,25 +1,36 @@
-import NavigationBar from "@/components/layout/NavigationBar";
+"use client";
+
+import { useState } from "react";
+
+import NavigationBar from "@/components/Layout/NavigationBar";
 import MapToolbars from "@/components/Map/MapToolbars";
 import CampusMaps from "@/components/Map/CampusMaps";
 import BuildingInfos from "@/components/Map/BuildingInfos";
 
+import { Building } from "@/types/building";
+
 export default function Home() {
+
+   const [selectedBuilding, setSelectedBuilding] =
+      useState<Building | null>(null);
+
    return (
-      <div className="h-screen flex flex-col">
+      <div className="h-screen flex flex-col bg-gray-100">
 
          <NavigationBar />
 
-         <main className="flex flex-1 overflow-hidden">
+         <main className="flex flex-1 gap-5 p-5 overflow-hidden">
 
-            <div className="flex flex-col flex-1">
+            <MapToolbars />
 
-               <MapToolbars />
+            <CampusMaps
+               selectedBuilding={selectedBuilding}
+               setSelectedBuilding={setSelectedBuilding}
+            />
 
-               <CampusMaps />
-
-            </div>
-
-            <BuildingInfos />
+            <BuildingInfos
+               building={selectedBuilding}
+            />
 
          </main>
 
