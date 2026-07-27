@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import NavigationBar from "@/components/Layout/NavigationBar";
+import NavigationBar from "@/components/layout/NavigationBar";
 import MapToolbars from "@/components/Map/MapToolbars";
 import CampusMaps from "@/components/Map/CampusMaps";
 import BuildingInfos from "@/components/Sidebar/BuildingInfos";
