@@ -82,17 +82,36 @@ export default function BuildingList({
 
             return (
 
-               <button
+               <div
 
                   key={building.id}
+
+                  role="button"
+
+                  tabIndex={0}
 
                   onClick={() =>
                      onSelectBuilding(building)
                   }
 
+                  onKeyDown={(e) => {
+
+                     if (
+                        e.key === "Enter" ||
+                        e.key === " "
+                     ) {
+
+                        e.preventDefault();
+
+                        onSelectBuilding(building);
+
+                     }
+
+                  }}
+
                   className={`
                      group
-                     w-full
+                     cursor-pointer
                      rounded-2xl
                      border
                      p-4
@@ -141,23 +160,13 @@ export default function BuildingList({
 
                         <div>
 
-                           <h3
-                              className="
-                                 text-lg
-                                 font-semibold
-                              "
-                           >
+                           <h3 className="text-lg font-semibold">
 
                               {building.name}
 
                            </h3>
 
-                           <p
-                              className="
-                                 text-sm
-                                 text-gray-500
-                              "
-                           >
+                           <p className="text-sm text-gray-500">
 
                               {building.category}
 
@@ -167,7 +176,11 @@ export default function BuildingList({
 
                      </div>
 
+                     {/* Favorite */}
+
                      <button
+
+                        type="button"
 
                         onClick={(e) => {
 
@@ -183,23 +196,16 @@ export default function BuildingList({
                            transition
                            hover:bg-gray-100
                         "
+
                      >
 
                         {favorite ? (
 
-                           <FaHeart
-                              className="
-                                 text-red-500
-                              "
-                           />
+                           <FaHeart className="text-red-500" />
 
                         ) : (
 
-                           <FaRegHeart
-                              className="
-                                 text-gray-400
-                              "
-                           />
+                           <FaRegHeart className="text-gray-400" />
 
                         )}
 
@@ -266,7 +272,7 @@ export default function BuildingList({
 
                   </div>
 
-               </button>
+               </div>
 
             );
 

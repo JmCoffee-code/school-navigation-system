@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import NavigationBar from "@/components/Layout/NavigationBar";
-import MapToolbars from "@/components/Map/MapToolbars";
+import CampusExplorer from "@/components/Map/CampusExplorer";
 import CampusMaps from "@/components/Map/CampusMaps";
 import BuildingDetails from "@/components/Sidebar/BuildingDetails";
 
@@ -99,10 +99,7 @@ export default function Home() {
          {/* Navigation Bar */}
          {/* ================================= */}
 
-         <NavigationBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-         />
+         <NavigationBar />
 
          {/* ================================= */}
          {/* Main Layout */}
