@@ -1,19 +1,21 @@
-import NavigationBar from "@/components/NavigationBar";
-import Search from "@/components/Search";
-import Maps from "@/components/Maps";
-import BuildingList from "@/components/BuildingList"
-import Footers from "@/components/Footers";
+import NavigationBar from "@/components/layout/NavigationBar";
+import MapToolbars from "@/components/Map/MapToolbars";
+import CampusMaps from "@/components/Map/CampusMaps";
+import BuildingInfos from "@/components/Map/BuildingInfos";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <NavigationBar />
-      <Search />
-      <Maps />
-      <BuildingList />
-      <Footers />
 
-      <h1>Welcome to My App</h1>
-    </main>
+      <main className="flex">
+        <div className="flex-1">
+          <MapToolbars />
+          <CampusMaps />
+        </div>
+
+        <BuildingInfos />
+      </main>
+    </>
   );
 }
