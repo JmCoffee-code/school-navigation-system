@@ -1,35 +1,27 @@
 import {
-   Building2,
    Heart,
+   Layers3,
    MapPin,
    Route,
    DoorOpen,
-   Layers3,
-   Wifi,
-   AirVent,
    Users,
+   Wifi,
+   CircleCheck,
 } from "lucide-react";
 
+import getBuildingIcon from "@/lib/getBuildingIcon";
 import { Building } from "@/types/building";
 
 interface BuildingDetailsProps {
-
    building: Building | null;
-
    favorites: number[];
-
    toggleFavorite: (id: number) => void;
-
 }
 
 export default function BuildingDetails({
-
    building,
-
    favorites,
-
    toggleFavorite,
-
 }: BuildingDetailsProps) {
 
    if (!building) {
@@ -41,7 +33,6 @@ export default function BuildingDetails({
                flex
                w-96
                flex-col
-               overflow-hidden
                rounded-3xl
                border
                border-slate-200
@@ -54,10 +45,10 @@ export default function BuildingDetails({
 
                <div
                   className="
-                     mb-8
+                     mb-6
                      flex
-                     h-28
-                     w-28
+                     h-24
+                     w-24
                      items-center
                      justify-center
                      rounded-full
@@ -65,36 +56,24 @@ export default function BuildingDetails({
                   "
                >
 
-                  <Building2
-                     size={56}
+                  <MapPin
+                     size={46}
                      className="text-green-600"
                   />
 
                </div>
 
-               <h2
-                  className="
-                     text-2xl
-                     font-bold
-                     text-slate-800
-                  "
-               >
+               <h2 className="text-2xl font-bold text-slate-800">
 
-                  No Building Selected
+                  Select a Building
 
                </h2>
 
-               <p
-                  className="
-                     mt-3
-                     text-center
-                     leading-7
-                     text-slate-500
-                  "
-               >
+               <p className="mt-3 text-center leading-7 text-slate-500">
 
-                  Select any building from the Campus Explorer
-                  or click a marker on the campus map.
+                  Click a building from the explorer
+                  or the map to view detailed
+                  information.
 
                </p>
 
@@ -106,7 +85,9 @@ export default function BuildingDetails({
 
    }
 
-   const isFavorite =
+   const Icon = getBuildingIcon(building.icon);
+
+   const favorite =
       favorites.includes(building.id);
 
    return (
@@ -125,14 +106,14 @@ export default function BuildingDetails({
          "
       >
 
-         {/* HERO */}
+         {/* Hero */}
 
          <div
             className="
                bg-gradient-to-br
-               from-green-600
-               via-green-500
-               to-emerald-400
+               from-green-700
+               via-green-600
+               to-emerald-500
                p-8
                text-white
             "
@@ -152,14 +133,16 @@ export default function BuildingDetails({
                   "
                >
 
-                  <Building2 size={42} />
+                  <Icon size={42} />
 
                </div>
 
                <button
+
                   onClick={() =>
                      toggleFavorite(building.id)
                   }
+
                   className="
                      rounded-2xl
                      bg-white/20
@@ -167,12 +150,13 @@ export default function BuildingDetails({
                      transition
                      hover:bg-white/30
                   "
+
                >
 
                   <Heart
                      size={22}
                      fill={
-                        isFavorite
+                        favorite
                            ? "currentColor"
                            : "none"
                      }
@@ -198,13 +182,7 @@ export default function BuildingDetails({
 
                </span>
 
-               <h2
-                  className="
-                     mt-4
-                     text-4xl
-                     font-bold
-                  "
-               >
+               <h2 className="mt-4 text-4xl font-bold">
 
                   {building.name}
 
@@ -213,17 +191,22 @@ export default function BuildingDetails({
                <div className="mt-4 flex items-center gap-2">
 
                   <span
-                     className="
+                     className={`
                         h-3
                         w-3
                         rounded-full
-                        bg-lime-300
-                     "
+
+                        ${
+                           building.status === "Open"
+                              ? "bg-lime-300"
+                              : "bg-red-400"
+                        }
+                     `}
                   />
 
                   <span>
 
-                     Open
+                     {building.status}
 
                   </span>
 
@@ -233,47 +216,41 @@ export default function BuildingDetails({
 
          </div>
 
-         {/* CONTENT */}
+         {/* Body */}
 
          <div className="flex-1 overflow-y-auto p-6">
 
             <div className="grid grid-cols-2 gap-4">
 
                <InfoCard
-                  icon={<Layers3 size={20} />}
+                  icon={<Layers3 size={18} />}
                   label="Floors"
                   value={building.floors}
                />
 
                <InfoCard
-                  icon={<DoorOpen size={20} />}
+                  icon={<DoorOpen size={18} />}
                   label="Rooms"
                   value={building.rooms}
                />
 
                <InfoCard
-                  icon={<MapPin size={20} />}
-                  label="Location"
-                  value="North Wing"
+                  icon={<Users size={18} />}
+                  label="Capacity"
+                  value={building.capacity}
                />
 
                <InfoCard
-                  icon={<Users size={20} />}
-                  label="Capacity"
-                  value="120"
+                  icon={<MapPin size={18} />}
+                  label="Location"
+                  value={building.location}
                />
 
             </div>
 
-            <div className="mt-8">
+            <section className="mt-8">
 
-               <h3
-                  className="
-                     text-lg
-                     font-bold
-                     text-slate-800
-                  "
-               >
+               <h3 className="text-lg font-bold">
 
                   Facilities
 
@@ -281,51 +258,57 @@ export default function BuildingDetails({
 
                <div className="mt-4 flex flex-wrap gap-2">
 
-                  <FacilityBadge
-                     icon={<Wifi size={16} />}
-                     text="Wi-Fi"
-                  />
+                  {building.facilities.map((facility) => (
 
-                  <FacilityBadge
-                     icon={<AirVent size={16} />}
-                     text="Air Conditioned"
-                  />
+                     <div
+
+                        key={facility}
+
+                        className="
+                           flex
+                           items-center
+                           gap-2
+                           rounded-full
+                           bg-green-100
+                           px-3
+                           py-2
+                           text-sm
+                           text-green-700
+                        "
+
+                     >
+
+                        <Wifi size={14} />
+
+                        {facility}
+
+                     </div>
+
+                  ))}
 
                </div>
 
-            </div>
+            </section>
 
-            <div className="mt-8">
+            <section className="mt-8">
 
-               <h3
-                  className="
-                     text-lg
-                     font-bold
-                     text-slate-800
-                  "
-               >
+               <h3 className="text-lg font-bold">
 
                   Description
 
                </h3>
 
-               <p
-                  className="
-                     mt-3
-                     leading-8
-                     text-slate-500
-                  "
-               >
+               <p className="mt-3 leading-8 text-slate-600">
 
                   {building.description}
 
                </p>
 
-            </div>
+            </section>
 
          </div>
 
-         {/* FOOTER */}
+         {/* Footer */}
 
          <div
             className="
@@ -348,7 +331,6 @@ export default function BuildingDetails({
                   font-semibold
                   text-white
                   transition
-
                   hover:bg-green-700
                "
             >
@@ -367,26 +349,16 @@ export default function BuildingDetails({
 
 }
 
-/* ====================================================== */
-
 interface InfoCardProps {
-
    icon: React.ReactNode;
-
    label: string;
-
    value: string | number;
-
 }
 
 function InfoCard({
-
    icon,
-
    label,
-
    value,
-
 }: InfoCardProps) {
 
    return (
@@ -431,50 +403,6 @@ function InfoCard({
             {value}
 
          </h4>
-
-      </div>
-
-   );
-
-}
-
-/* ====================================================== */
-
-interface FacilityBadgeProps {
-
-   icon: React.ReactNode;
-
-   text: string;
-
-}
-
-function FacilityBadge({
-
-   icon,
-
-   text,
-
-}: FacilityBadgeProps) {
-
-   return (
-
-      <div
-         className="
-            flex
-            items-center
-            gap-2
-            rounded-full
-            bg-green-100
-            px-4
-            py-2
-            text-sm
-            text-green-700
-         "
-      >
-
-         {icon}
-
-         {text}
 
       </div>
 

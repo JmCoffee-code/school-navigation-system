@@ -5,22 +5,16 @@ import { Building } from "@/types/building";
 import BuildingMarker from "./BuildingMarker";
 import MapControls from "./MapControls";
 
-import { buildings } from "@/data/buildings";
-
 interface CampusMapsProps {
-
+   buildings: Building[];
    selectedBuilding: Building | null;
-
    setSelectedBuilding: (building: Building) => void;
-
 }
 
 export default function CampusMaps({
-
+   buildings,
    selectedBuilding,
-
    setSelectedBuilding,
-
 }: CampusMapsProps) {
 
    return (
@@ -38,9 +32,7 @@ export default function CampusMaps({
          "
       >
 
-         {/* ========================================== */}
-         {/* Background Gradient */}
-         {/* ========================================== */}
+         {/* Background */}
 
          <div
             className="
@@ -53,30 +45,20 @@ export default function CampusMaps({
             "
          />
 
-         {/* ========================================== */}
          {/* Grid */}
-         {/* ========================================== */}
 
          <div
-
             className="absolute inset-0 opacity-60"
-
             style={{
-
                backgroundImage: `
                   linear-gradient(#E2E8F0 1px, transparent 1px),
                   linear-gradient(90deg,#E2E8F0 1px,transparent 1px)
                `,
-
                backgroundSize: "48px 48px",
-
             }}
-
          />
 
-         {/* ========================================== */}
-         {/* Center Hero */}
-         {/* ========================================== */}
+         {/* Hero */}
 
          {!selectedBuilding && (
 
@@ -114,24 +96,13 @@ export default function CampusMaps({
 
                   </div>
 
-                  <h2
-                     className="
-                        text-4xl
-                        font-bold
-                        text-slate-800
-                     "
-                  >
+                  <h2 className="text-4xl font-bold text-slate-800">
 
                      Green Valley Campus
 
                   </h2>
 
-                  <p
-                     className="
-                        mt-3
-                        text-slate-500
-                     "
-                  >
+                  <p className="mt-3 text-slate-500">
 
                      Select a building to begin exploring.
 
@@ -143,9 +114,7 @@ export default function CampusMaps({
 
          )}
 
-         {/* ========================================== */}
-         {/* Building Markers */}
-         {/* ========================================== */}
+         {/* Markers */}
 
          {buildings.map((building) => (
 
@@ -167,15 +136,11 @@ export default function CampusMaps({
 
          ))}
 
-         {/* ========================================== */}
-         {/* Map Controls */}
-         {/* ========================================== */}
+         {/* Controls */}
 
          <MapControls />
 
-         {/* ========================================== */}
-         {/* Coordinates */}
-         {/* ========================================== */}
+         {/* Footer */}
 
          <div
             className="
@@ -188,7 +153,6 @@ export default function CampusMaps({
                bg-white/90
                px-4
                py-3
-               text-sm
                shadow-lg
                backdrop-blur
             "
@@ -200,7 +164,7 @@ export default function CampusMaps({
 
             </p>
 
-            <p className="text-slate-500">
+            <p className="text-sm text-slate-500">
 
                Interactive Campus Map
 

@@ -14,46 +14,15 @@ import { Building } from "@/types/building";
 
 interface CampusExplorerProps {
    buildings: Building[];
-
    selectedBuilding: Building | null;
-
    onSelectBuilding: (building: Building) => void;
-
    selectedCategory: string;
-
    setSelectedCategory: (category: string) => void;
-
    favorites: number[];
-
    toggleFavorite: (id: number) => void;
-
    searchQuery: string;
-
    setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
-
-const categories = [
-   {
-      label: "All",
-      icon: <Building2 size={16} />,
-   },
-   {
-      label: "Academic",
-      icon: <GraduationCap size={16} />,
-   },
-   {
-      label: "Facilities",
-      icon: <Building2 size={16} />,
-   },
-   {
-      label: "Sports",
-      icon: <Trophy size={16} />,
-   },
-   {
-      label: "Parking",
-      icon: <Car size={16} />,
-   },
-];
 
 export default function CampusExplorer({
    buildings,
@@ -66,6 +35,45 @@ export default function CampusExplorer({
    searchQuery,
    setSearchQuery,
 }: CampusExplorerProps) {
+
+   const categoryCounts = {
+      All: buildings.length,
+      Academic: buildings.filter(
+         (b) => b.category === "Academic"
+      ).length,
+      Facilities: buildings.filter(
+         (b) => b.category === "Facilities"
+      ).length,
+      Sports: buildings.filter(
+         (b) => b.category === "Sports"
+      ).length,
+      Parking: buildings.filter(
+         (b) => b.category === "Parking"
+      ).length,
+   };
+
+   const categories = [
+      {
+         label: "All",
+         icon: <Building2 size={16} />,
+      },
+      {
+         label: "Academic",
+         icon: <GraduationCap size={16} />,
+      },
+      {
+         label: "Facilities",
+         icon: <Building2 size={16} />,
+      },
+      {
+         label: "Sports",
+         icon: <Trophy size={16} />,
+      },
+      {
+         label: "Parking",
+         icon: <Car size={16} />,
+      },
+   ];
 
    return (
 
@@ -83,13 +91,11 @@ export default function CampusExplorer({
          "
       >
 
-         {/* ====================================== */}
          {/* Header */}
-         {/* ====================================== */}
 
          <div className="border-b border-slate-200 p-6">
 
-            <h2 className="text-2xl font-bold text-slate-800">
+            <h2 className="text-2xl font-bold">
 
                Campus Explorer
 
@@ -97,15 +103,13 @@ export default function CampusExplorer({
 
             <p className="mt-1 text-sm text-slate-500">
 
-               Discover every building around campus.
+               Discover every building.
 
             </p>
 
          </div>
 
-         {/* ====================================== */}
          {/* Search */}
-         {/* ====================================== */}
 
          <div className="border-b border-slate-200 p-5">
 
@@ -123,7 +127,6 @@ export default function CampusExplorer({
                />
 
                <input
-                  type="text"
                   value={searchQuery}
                   onChange={(e) =>
                      setSearchQuery(e.target.value)
@@ -139,12 +142,7 @@ export default function CampusExplorer({
                      pl-11
                      pr-4
                      outline-none
-                     transition
-
                      focus:border-green-600
-                     focus:bg-white
-                     focus:ring-2
-                     focus:ring-green-100
                   "
                />
 
@@ -152,42 +150,28 @@ export default function CampusExplorer({
 
          </div>
 
-         {/* ====================================== */}
          {/* Quick Actions */}
-         {/* ====================================== */}
 
          <div className="border-b border-slate-200 p-5">
 
-            <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <ActionButton
+               icon={<LocateFixed size={18} />}
+               label="Current Location"
+            />
 
-               Quick Actions
+            <ActionButton
+               icon={<Route size={18} />}
+               label="Navigate"
+            />
 
-            </h3>
-
-            <div className="space-y-2">
-
-               <ActionButton
-                  icon={<LocateFixed size={18} />}
-                  label="Current Location"
-               />
-
-               <ActionButton
-                  icon={<Route size={18} />}
-                  label="Start Navigation"
-               />
-
-               <ActionButton
-                  icon={<Heart size={18} />}
-                  label="Favorite Buildings"
-               />
-
-            </div>
+            <ActionButton
+               icon={<Heart size={18} />}
+               label="Favorites"
+            />
 
          </div>
 
-         {/* ====================================== */}
          {/* Categories */}
-         {/* ====================================== */}
 
          <div className="border-b border-slate-200 p-5">
 
@@ -197,38 +181,63 @@ export default function CampusExplorer({
 
             </h3>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="space-y-2">
 
                {categories.map((category) => (
 
                   <button
+
                      key={category.label}
+
                      onClick={() =>
                         setSelectedCategory(category.label)
                      }
+
                      className={`
                         flex
+                        w-full
                         items-center
-                        gap-2
-                        rounded-full
+                        justify-between
+                        rounded-xl
                         px-4
-                        py-2
-                        text-sm
+                        py-3
                         transition
 
                         ${
                            selectedCategory === category.label
-
                               ? "bg-green-600 text-white"
-
-                              : "bg-slate-100 text-slate-600 hover:bg-green-100"
+                              : "hover:bg-slate-100"
                         }
                      `}
+
                   >
 
-                     {category.icon}
+                     <div className="flex items-center gap-3">
 
-                     {category.label}
+                        {category.icon}
+
+                        {category.label}
+
+                     </div>
+
+                     <span
+                        className="
+                           rounded-full
+                           bg-white/20
+                           px-2
+                           py-1
+                           text-xs
+                           font-bold
+                        "
+                     >
+
+                        {
+                           categoryCounts[
+                              category.label as keyof typeof categoryCounts
+                           ]
+                        }
+
+                     </span>
 
                   </button>
 
@@ -238,43 +247,17 @@ export default function CampusExplorer({
 
          </div>
 
-         {/* ====================================== */}
          {/* Buildings */}
-         {/* ====================================== */}
 
          <div className="flex flex-1 flex-col overflow-hidden">
 
-            <div
-               className="
-                  flex
-                  items-center
-                  justify-between
-                  px-5
-                  py-4
-               "
-            >
+            <div className="px-5 py-4">
 
-               <h3 className="font-semibold text-slate-700">
+               <h3 className="font-semibold">
 
                   Buildings
 
                </h3>
-
-               <span
-                  className="
-                     rounded-full
-                     bg-green-100
-                     px-3
-                     py-1
-                     text-xs
-                     font-bold
-                     text-green-700
-                  "
-               >
-
-                  {buildings.length}
-
-               </span>
 
             </div>
 
@@ -292,42 +275,11 @@ export default function CampusExplorer({
 
          </div>
 
-         {/* ====================================== */}
-         {/* Footer */}
-         {/* ====================================== */}
-
-         <div
-            className="
-               border-t
-               border-slate-200
-               bg-slate-50
-               p-5
-            "
-         >
-
-            <div className="grid grid-cols-2 gap-3">
-
-               <StatCard
-                  title="Buildings"
-                  value={buildings.length}
-               />
-
-               <StatCard
-                  title="Favorites"
-                  value={favorites.length}
-               />
-
-            </div>
-
-         </div>
-
       </aside>
 
    );
 
 }
-
-/* ===================================================== */
 
 interface ActionButtonProps {
    icon: React.ReactNode;
@@ -343,88 +295,24 @@ function ActionButton({
 
       <button
          className="
+            mb-2
             flex
             w-full
             items-center
-            gap-4
-            rounded-2xl
+            gap-3
+            rounded-xl
             px-4
             py-3
             transition
-
             hover:bg-green-50
          "
       >
 
-         <div className="text-green-600">
+         {icon}
 
-            {icon}
-
-         </div>
-
-         <span className="font-medium">
-
-            {label}
-
-         </span>
+         {label}
 
       </button>
-
-   );
-
-}
-
-/* ===================================================== */
-
-interface StatCardProps {
-   title: string;
-   value: number;
-}
-
-function StatCard({
-   title,
-   value,
-}: StatCardProps) {
-
-   return (
-
-      <div
-         className="
-            rounded-2xl
-            bg-white
-            p-4
-            text-center
-            shadow-sm
-         "
-      >
-
-         <h4
-            className="
-               text-2xl
-               font-bold
-               text-green-700
-            "
-         >
-
-            {value}
-
-         </h4>
-
-         <p
-            className="
-               mt-1
-               text-xs
-               uppercase
-               tracking-wider
-               text-slate-500
-            "
-         >
-
-            {title}
-
-         </p>
-
-      </div>
 
    );
 

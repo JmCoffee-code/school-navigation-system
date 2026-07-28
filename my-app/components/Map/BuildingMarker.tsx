@@ -1,26 +1,19 @@
-import { Building2 } from "lucide-react";
-
+import getBuildingIcon from "@/lib/getBuildingIcon";
 import { Building } from "@/types/building";
 
 interface BuildingMarkerProps {
-
    building: Building;
-
    selected: boolean;
-
    onClick: () => void;
-
 }
 
 export default function BuildingMarker({
-
    building,
-
    selected,
-
    onClick,
-
 }: BuildingMarkerProps) {
+
+   const Icon = getBuildingIcon(building.icon);
 
    return (
 
@@ -33,33 +26,39 @@ export default function BuildingMarker({
             top: `${building.y}%`,
          }}
 
-         className="
+         className={`
             group
             absolute
             -translate-x-1/2
             -translate-y-1/2
             transition-all
             duration-300
-         "
+
+            ${
+               selected
+                  ? "z-30"
+                  : "z-10 hover:z-20"
+            }
+         `}
 
       >
 
-         {/* =============================== */}
-         {/* Label */}
-         {/* =============================== */}
+         {/* ========================= */}
+         {/* Floating Label */}
+         {/* ========================= */}
 
          <div
 
             className={`
                absolute
-               -top-12
+               -top-14
                left-1/2
                -translate-x-1/2
                whitespace-nowrap
                rounded-full
-               px-3
-               py-1
-               text-xs
+               px-4
+               py-2
+               text-sm
                font-semibold
                shadow-lg
                transition-all
@@ -67,10 +66,8 @@ export default function BuildingMarker({
 
                ${
                   selected
-
-                     ? "scale-100 bg-green-600 text-white opacity-100"
-
-                     : "scale-90 bg-white text-slate-700 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+                     ? "bg-green-600 text-white opacity-100 scale-100"
+                     : "bg-white text-slate-700 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100"
                }
             `}
 
@@ -80,9 +77,9 @@ export default function BuildingMarker({
 
          </div>
 
-         {/* =============================== */}
+         {/* ========================= */}
          {/* Pulse Ring */}
-         {/* =============================== */}
+         {/* ========================= */}
 
          {selected && (
 
@@ -90,26 +87,46 @@ export default function BuildingMarker({
                className="
                   absolute
                   inset-0
-                  animate-ping
                   rounded-full
                   bg-green-400
                   opacity-30
+                  animate-ping
                "
             />
 
          )}
 
-         {/* =============================== */}
+         {/* ========================= */}
+         {/* Outer Ring */}
+         {/* ========================= */}
+
+         <div
+            className={`
+               absolute
+               inset-0
+               rounded-full
+               transition-all
+               duration-300
+
+               ${
+                  selected
+                     ? "scale-150 border-2 border-green-400"
+                     : "scale-100"
+               }
+            `}
+         />
+
+         {/* ========================= */}
          {/* Marker */}
-         {/* =============================== */}
+         {/* ========================= */}
 
          <div
 
             className={`
                relative
                flex
-               h-12
-               w-12
+               h-14
+               w-14
                items-center
                justify-center
                rounded-full
@@ -122,13 +139,13 @@ export default function BuildingMarker({
 
                      ? "scale-110 border-green-700 bg-green-600 text-white shadow-2xl"
 
-                     : "border-white bg-white text-green-700 shadow-lg group-hover:scale-110 group-hover:shadow-xl"
+                     : "border-white bg-white text-green-700 shadow-lg group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-2xl"
                }
             `}
 
          >
 
-            <Building2 size={20} />
+            <Icon size={24} />
 
          </div>
 

@@ -124,12 +124,10 @@ export default function Home() {
             {/* Center */}
 
             <CampusMaps
-
-               selectedBuilding={selectedBuilding}
-
-               setSelectedBuilding={handleSelectBuilding}
-
-            />
+   buildings={filteredBuildings}
+   selectedBuilding={selectedBuilding}
+   setSelectedBuilding={handleSelectBuilding}
+/>
 
             {/* Right */}
 

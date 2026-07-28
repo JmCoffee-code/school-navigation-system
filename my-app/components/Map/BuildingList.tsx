@@ -1,38 +1,26 @@
 import {
-   FaBuilding,
    FaChevronRight,
    FaHeart,
    FaRegHeart,
 } from "react-icons/fa";
 
+import getBuildingIcon from "@/lib/getBuildingIcon";
 import { Building } from "@/types/building";
 
 interface BuildingListProps {
-
    buildings: Building[];
-
    selectedBuilding: Building | null;
-
    onSelectBuilding: (building: Building) => void;
-
    favorites: number[];
-
    toggleFavorite: (id: number) => void;
-
 }
 
 export default function BuildingList({
-
    buildings,
-
    selectedBuilding,
-
    onSelectBuilding,
-
    favorites,
-
    toggleFavorite,
-
 }: BuildingListProps) {
 
    if (buildings.length === 0) {
@@ -41,25 +29,12 @@ export default function BuildingList({
 
          <div className="py-16 text-center">
 
-            <FaBuilding
-               className="
-                  mx-auto
-                  mb-4
-                  text-4xl
-                  text-gray-300
-               "
-            />
-
-            <h3 className="font-semibold">
-
-               No buildings found
-
+            <h3 className="text-lg font-semibold text-slate-700">
+               No Buildings Found
             </h3>
 
-            <p className="mt-2 text-sm text-gray-500">
-
-               Try another category.
-
+            <p className="mt-2 text-sm text-slate-500">
+               Try another search or category.
             </p>
 
          </div>
@@ -79,6 +54,9 @@ export default function BuildingList({
 
             const favorite =
                favorites.includes(building.id);
+
+            const Icon =
+               getBuildingIcon(building.icon);
 
             return (
 
@@ -115,21 +93,20 @@ export default function BuildingList({
                      rounded-2xl
                      border
                      p-4
-                     text-left
                      transition-all
                      duration-200
 
                      ${
                         selected
-
                            ? "border-green-600 bg-green-50 shadow-md"
-
-                           : "border-gray-200 bg-white hover:-translate-y-1 hover:border-green-300 hover:shadow-lg"
+                           : "border-slate-200 bg-white hover:-translate-y-1 hover:border-green-300 hover:shadow-lg"
                      }
                   `}
                >
 
+                  {/* ========================= */}
                   {/* Header */}
+                  {/* ========================= */}
 
                   <div className="flex items-start justify-between">
 
@@ -146,31 +123,53 @@ export default function BuildingList({
 
                               ${
                                  selected
-
                                     ? "bg-green-600 text-white"
-
                                     : "bg-green-100 text-green-700"
                               }
                            `}
                         >
 
-                           <FaBuilding />
+                           <Icon size={22} />
 
                         </div>
 
                         <div>
 
-                           <h3 className="text-lg font-semibold">
+                           <h3 className="text-lg font-semibold text-slate-800">
 
                               {building.name}
 
                            </h3>
 
-                           <p className="text-sm text-gray-500">
+                           <div className="mt-1 flex items-center gap-2">
 
-                              {building.category}
+                              <span
+                                 className={`
+                                    rounded-full
+                                    px-2
+                                    py-1
+                                    text-xs
+                                    font-semibold
 
-                           </p>
+                                    ${
+                                       building.status === "Open"
+                                          ? "bg-green-100 text-green-700"
+                                          : "bg-red-100 text-red-700"
+                                    }
+                                 `}
+                              >
+
+                                 {building.status}
+
+                              </span>
+
+                              <span className="text-sm text-slate-500">
+
+                                 {building.category}
+
+                              </span>
+
+                           </div>
 
                         </div>
 
@@ -194,7 +193,7 @@ export default function BuildingList({
                            rounded-full
                            p-2
                            transition
-                           hover:bg-gray-100
+                           hover:bg-slate-100
                         "
 
                      >
@@ -205,7 +204,7 @@ export default function BuildingList({
 
                         ) : (
 
-                           <FaRegHeart className="text-gray-400" />
+                           <FaRegHeart className="text-slate-400" />
 
                         )}
 
@@ -213,43 +212,67 @@ export default function BuildingList({
 
                   </div>
 
-                  {/* Information */}
+                  {/* ========================= */}
+                  {/* Info */}
+                  {/* ========================= */}
 
-                  <div
-                     className="
-                        mt-5
-                        flex
-                        items-center
-                        gap-4
-                        text-sm
-                        text-gray-500
-                     "
-                  >
+                  <div className="mt-5 flex flex-wrap gap-2">
 
-                     <span>
+                     <span
+                        className="
+                           rounded-full
+                           bg-slate-100
+                           px-3
+                           py-1
+                           text-xs
+                           font-medium
+                           text-slate-600
+                        "
+                     >
 
                         🏢 {building.floors} Floors
 
                      </span>
 
-                     <span>
+                     <span
+                        className="
+                           rounded-full
+                           bg-slate-100
+                           px-3
+                           py-1
+                           text-xs
+                           font-medium
+                           text-slate-600
+                        "
+                     >
 
                         🚪 {building.rooms} Rooms
 
                      </span>
 
+                     <span
+                        className="
+                           rounded-full
+                           bg-slate-100
+                           px-3
+                           py-1
+                           text-xs
+                           font-medium
+                           text-slate-600
+                        "
+                     >
+
+                        👥 {building.capacity}
+
+                     </span>
+
                   </div>
 
+                  {/* ========================= */}
                   {/* Footer */}
+                  {/* ========================= */}
 
-                  <div
-                     className="
-                        mt-5
-                        flex
-                        items-center
-                        justify-between
-                     "
-                  >
+                  <div className="mt-5 flex items-center justify-between">
 
                      <span
                         className="
@@ -266,6 +289,7 @@ export default function BuildingList({
                      <FaChevronRight
                         className="
                            transition-transform
+                           duration-200
                            group-hover:translate-x-1
                         "
                      />
