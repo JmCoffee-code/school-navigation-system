@@ -1,51 +1,46 @@
-import {
-   FaLocationArrow,
-   FaPlus,
-   FaMinus,
-   FaCompass,
-} from "react-icons/fa";
+import { Compass } from "lucide-react";
 
-import { buildings } from "@/data/buildings";
 import { Building } from "@/types/building";
 
 import BuildingMarker from "./BuildingMarker";
+import MapControls from "./MapControls";
+
+import { buildings } from "@/data/buildings";
 
 interface CampusMapsProps {
+
    selectedBuilding: Building | null;
+
    setSelectedBuilding: (building: Building) => void;
+
 }
 
 export default function CampusMaps({
+
    selectedBuilding,
+
    setSelectedBuilding,
+
 }: CampusMapsProps) {
+
    return (
+
       <section
          className="
             relative
             flex-1
             overflow-hidden
-            rounded-2xl
+            rounded-3xl
             border
-            border-gray-200
+            border-slate-200
             bg-white
-            shadow-md
+            shadow-lg
          "
       >
-         {/* Grid */}
 
-         <div
-            className="absolute inset-0"
-            style={{
-               backgroundImage: `
-                  linear-gradient(#F1F5F9 1px, transparent 1px),
-                  linear-gradient(90deg,#F1F5F9 1px,transparent 1px)
-               `,
-               backgroundSize: "50px 50px",
-            }}
-         />
-
-         {/* Background */}
+         {/* ========================================== */}
+         {/* Background Gradient */}
+         {/* ========================================== */}
 
          <div
             className="
@@ -58,162 +53,163 @@ export default function CampusMaps({
             "
          />
 
-         {/* Center Title */}
+         {/* ========================================== */}
+         {/* Grid */}
+         {/* ========================================== */}
 
          <div
-            className="
-               absolute
-               inset-0
-               flex
-               items-center
-               justify-center
-               pointer-events-none
-            "
-         >
-            <div className="text-center">
 
-               <div
-                  className="
-                     mx-auto
-                     mb-6
-                     flex
-                     h-28
-                     w-28
-                     items-center
-                     justify-center
-                     rounded-full
-                     bg-green-100
-                  "
-               >
-                  <FaCompass
-                     className="text-5xl text-green-600"
-                  />
+            className="absolute inset-0 opacity-60"
+
+            style={{
+
+               backgroundImage: `
+                  linear-gradient(#E2E8F0 1px, transparent 1px),
+                  linear-gradient(90deg,#E2E8F0 1px,transparent 1px)
+               `,
+
+               backgroundSize: "48px 48px",
+
+            }}
+
+         />
+
+         {/* ========================================== */}
+         {/* Center Hero */}
+         {/* ========================================== */}
+
+         {!selectedBuilding && (
+
+            <div
+               className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  flex
+                  items-center
+                  justify-center
+               "
+            >
+
+               <div className="text-center">
+
+                  <div
+                     className="
+                        mx-auto
+                        mb-8
+                        flex
+                        h-28
+                        w-28
+                        items-center
+                        justify-center
+                        rounded-full
+                        bg-green-100
+                     "
+                  >
+
+                     <Compass
+                        size={54}
+                        className="text-green-600"
+                     />
+
+                  </div>
+
+                  <h2
+                     className="
+                        text-4xl
+                        font-bold
+                        text-slate-800
+                     "
+                  >
+
+                     Green Valley Campus
+
+                  </h2>
+
+                  <p
+                     className="
+                        mt-3
+                        text-slate-500
+                     "
+                  >
+
+                     Select a building to begin exploring.
+
+                  </p>
+
                </div>
 
-               <h2
-                  className="
-                     text-4xl
-                     font-bold
-                     text-slate-800
-                  "
-               >
-                  Green Valley Campus
-               </h2>
-
-               <p className="mt-3 text-gray-500">
-                  Interactive campus navigation system
-               </p>
-
             </div>
-         </div>
 
+         )}
+
+         {/* ========================================== */}
          {/* Building Markers */}
+         {/* ========================================== */}
 
          {buildings.map((building) => (
+
             <BuildingMarker
+
                key={building.id}
+
                building={building}
+
                selected={
                   selectedBuilding?.id === building.id
                }
+
                onClick={() =>
                   setSelectedBuilding(building)
                }
+
             />
+
          ))}
 
-         {/* Controls */}
+         {/* ========================================== */}
+         {/* Map Controls */}
+         {/* ========================================== */}
 
-         <div
-            className="
-               absolute
-               right-6
-               top-1/2
-               -translate-y-1/2
-               flex
-               flex-col
-               gap-4
-            "
-         >
+         <MapControls />
 
-            <ControlButton>
-
-               <FaPlus />
-
-            </ControlButton>
-
-            <ControlButton>
-
-               <FaMinus />
-
-            </ControlButton>
-
-            <ControlButton active>
-
-               <FaLocationArrow />
-
-            </ControlButton>
-
-         </div>
-
-         {/* Compass */}
+         {/* ========================================== */}
+         {/* Coordinates */}
+         {/* ========================================== */}
 
          <div
             className="
                absolute
                bottom-6
                left-6
-               flex
-               h-14
-               w-14
-               items-center
-               justify-center
-               rounded-full
-               bg-white
-               shadow-lg
+               rounded-2xl
                border
+               border-slate-200
+               bg-white/90
+               px-4
+               py-3
+               text-sm
+               shadow-lg
+               backdrop-blur
             "
          >
 
-            <FaCompass
-               className="text-xl text-gray-700"
-            />
+            <p className="font-semibold">
+
+               Green Valley Navigator
+
+            </p>
+
+            <p className="text-slate-500">
+
+               Interactive Campus Map
+
+            </p>
 
          </div>
 
       </section>
+
    );
-}
 
-interface ControlButtonProps {
-   children: React.ReactNode;
-   active?: boolean;
-}
-
-function ControlButton({
-   children,
-   active = false,
-}: ControlButtonProps) {
-   return (
-      <button
-         className={`
-            flex
-            h-12
-            w-12
-            items-center
-            justify-center
-            rounded-xl
-            shadow-lg
-            transition
-
-            ${
-               active
-                  ? "bg-green-600 text-white"
-                  : "bg-white hover:bg-gray-100"
-            }
-         `}
-      >
-         {children}
-      </button>
-   );
 }

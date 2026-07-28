@@ -3,14 +3,18 @@
 import { useMemo, useState } from "react";
 
 import NavigationBar from "@/components/Layout/NavigationBar";
-import MapToolbars from "@/components/Map/MapToolbars";
+import CampusExplorer from "@/components/Map/CampusExplorer";
 import CampusMaps from "@/components/Map/CampusMaps";
-import BuildingInfos from "@/components/Sidebar/BuildingInfos";
+import BuildingDetails from "@/components/Sidebar/BuildingDetails";
 
-import { Building } from "@/types/building";
 import { buildings } from "@/data/buildings";
+import { Building } from "@/types/building";
 
 export default function Home() {
+
+   // ============================
+   // Global Application State
+   // ============================
 
    const [selectedBuilding, setSelectedBuilding] =
       useState<Building | null>(null);
@@ -18,17 +22,50 @@ export default function Home() {
    const [searchQuery, setSearchQuery] =
       useState("");
 
+   const [selectedCategory, setSelectedCategory] =
+      useState("All");
+
+   const [favorites, setFavorites] =
+      useState<number[]>([]);
+
+   // ============================
+   // Filtered Buildings
+   // ============================
+
    const filteredBuildings = useMemo(() => {
 
-      if (!searchQuery.trim()) return [];
+      let results = buildings;
 
-      return buildings.filter((building) =>
-         building.name
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())
-      );
+      // Category Filter
 
-   }, [searchQuery]);
+      if (selectedCategory !== "All") {
+
+         results = results.filter(
+            (building) =>
+               building.category === selectedCategory
+         );
+
+      }
+
+      // Search Filter
+
+      if (searchQuery.trim() !== "") {
+
+         results = results.filter((building) =>
+            building.name
+               .toLowerCase()
+               .includes(searchQuery.toLowerCase())
+         );
+
+      }
+
+      return results;
+
+   }, [searchQuery, selectedCategory]);
+
+   // ============================
+   // Building Selection
+   // ============================
 
    function handleSelectBuilding(building: Building) {
 
@@ -38,33 +75,75 @@ export default function Home() {
 
    }
 
+   // ============================
+   // Favorites
+   // ============================
+
+   function toggleFavorite(id: number) {
+
+      setFavorites((previous) =>
+
+         previous.includes(id)
+            ? previous.filter((favorite) => favorite !== id)
+            : [...previous, id]
+
+      );
+
+   }
+
    return (
 
       <div className="flex h-screen flex-col bg-slate-100">
 
+         {/* ================================= */}
+         {/* Navigation Bar */}
+         {/* ================================= */}
+
          <NavigationBar
-
             searchQuery={searchQuery}
-
             setSearchQuery={setSearchQuery}
-
-            searchResults={filteredBuildings}
-
-            onSelectBuilding={handleSelectBuilding}
-
          />
+
+         {/* ================================= */}
+         {/* Main Layout */}
+         {/* ================================= */}
 
          <main className="flex flex-1 gap-6 overflow-hidden p-6">
 
-            <MapToolbars />
+            {/* Left */}
+
+            <CampusExplorer
+   buildings={filteredBuildings}
+   selectedBuilding={selectedBuilding}
+   onSelectBuilding={handleSelectBuilding}
+   selectedCategory={selectedCategory}
+   setSelectedCategory={setSelectedCategory}
+   favorites={favorites}
+   toggleFavorite={toggleFavorite}
+   searchQuery={searchQuery}
+   setSearchQuery={setSearchQuery}
+/>
+
+            {/* Center */}
 
             <CampusMaps
+
                selectedBuilding={selectedBuilding}
-               setSelectedBuilding={setSelectedBuilding}
+
+               setSelectedBuilding={handleSelectBuilding}
+
             />
 
-            <BuildingInfos
+            {/* Right */}
+
+            <BuildingDetails
+
                building={selectedBuilding}
+
+               favorites={favorites}
+
+               toggleFavorite={toggleFavorite}
+
             />
 
          </main>

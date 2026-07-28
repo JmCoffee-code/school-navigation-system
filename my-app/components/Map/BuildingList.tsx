@@ -1,88 +1,276 @@
-import { FaBuilding } from "react-icons/fa";
-import { buildings } from "@/data/buildings";
+import {
+   FaBuilding,
+   FaChevronRight,
+   FaHeart,
+   FaRegHeart,
+} from "react-icons/fa";
 
-export default function BuildingList() {
+import { Building } from "@/types/building";
+
+interface BuildingListProps {
+
+   buildings: Building[];
+
+   selectedBuilding: Building | null;
+
+   onSelectBuilding: (building: Building) => void;
+
+   favorites: number[];
+
+   toggleFavorite: (id: number) => void;
+
+}
+
+export default function BuildingList({
+
+   buildings,
+
+   selectedBuilding,
+
+   onSelectBuilding,
+
+   favorites,
+
+   toggleFavorite,
+
+}: BuildingListProps) {
+
+   if (buildings.length === 0) {
+
+      return (
+
+         <div className="py-16 text-center">
+
+            <FaBuilding
+               className="
+                  mx-auto
+                  mb-4
+                  text-4xl
+                  text-gray-300
+               "
+            />
+
+            <h3 className="font-semibold">
+
+               No buildings found
+
+            </h3>
+
+            <p className="mt-2 text-sm text-gray-500">
+
+               Try another category.
+
+            </p>
+
+         </div>
+
+      );
+
+   }
 
    return (
 
-      <div className="mt-8">
+      <div className="space-y-3">
 
-         <h3
-            className="
-               mb-4
-               text-xs
-               uppercase
-               tracking-widest
-               text-gray-400
-            "
-         >
+         {buildings.map((building) => {
 
-            Buildings
+            const selected =
+               selectedBuilding?.id === building.id;
 
-         </h3>
+            const favorite =
+               favorites.includes(building.id);
 
-         <div className="space-y-2">
-
-            {buildings.map((building) => (
+            return (
 
                <button
+
                   key={building.id}
-                  className="
-                     flex
+
+                  onClick={() =>
+                     onSelectBuilding(building)
+                  }
+
+                  className={`
+                     group
                      w-full
-                     items-center
-                     gap-3
-                     rounded-xl
-                     px-3
-                     py-3
-                     transition
-                     hover:bg-green-50
-                  "
+                     rounded-2xl
+                     border
+                     p-4
+                     text-left
+                     transition-all
+                     duration-200
+
+                     ${
+                        selected
+
+                           ? "border-green-600 bg-green-50 shadow-md"
+
+                           : "border-gray-200 bg-white hover:-translate-y-1 hover:border-green-300 hover:shadow-lg"
+                     }
+                  `}
                >
 
-                  <div
-                     className="
-                        flex
-                        h-10
-                        w-10
-                        items-center
-                        justify-center
-                        rounded-lg
-                        bg-green-100
-                        text-green-700
-                     "
-                  >
+                  {/* Header */}
 
-                     <FaBuilding />
+                  <div className="flex items-start justify-between">
 
-                  </div>
+                     <div className="flex gap-4">
 
-                  <div className="text-left">
+                        <div
+                           className={`
+                              flex
+                              h-12
+                              w-12
+                              items-center
+                              justify-center
+                              rounded-xl
 
-                     <h4 className="font-semibold">
+                              ${
+                                 selected
 
-                        {building.name}
+                                    ? "bg-green-600 text-white"
 
-                     </h4>
+                                    : "bg-green-100 text-green-700"
+                              }
+                           `}
+                        >
 
-                     <p
+                           <FaBuilding />
+
+                        </div>
+
+                        <div>
+
+                           <h3
+                              className="
+                                 text-lg
+                                 font-semibold
+                              "
+                           >
+
+                              {building.name}
+
+                           </h3>
+
+                           <p
+                              className="
+                                 text-sm
+                                 text-gray-500
+                              "
+                           >
+
+                              {building.category}
+
+                           </p>
+
+                        </div>
+
+                     </div>
+
+                     <button
+
+                        onClick={(e) => {
+
+                           e.stopPropagation();
+
+                           toggleFavorite(building.id);
+
+                        }}
+
                         className="
-                           text-xs
-                           text-gray-500
+                           rounded-full
+                           p-2
+                           transition
+                           hover:bg-gray-100
                         "
                      >
 
-                        {building.category}
+                        {favorite ? (
 
-                     </p>
+                           <FaHeart
+                              className="
+                                 text-red-500
+                              "
+                           />
+
+                        ) : (
+
+                           <FaRegHeart
+                              className="
+                                 text-gray-400
+                              "
+                           />
+
+                        )}
+
+                     </button>
+
+                  </div>
+
+                  {/* Information */}
+
+                  <div
+                     className="
+                        mt-5
+                        flex
+                        items-center
+                        gap-4
+                        text-sm
+                        text-gray-500
+                     "
+                  >
+
+                     <span>
+
+                        🏢 {building.floors} Floors
+
+                     </span>
+
+                     <span>
+
+                        🚪 {building.rooms} Rooms
+
+                     </span>
+
+                  </div>
+
+                  {/* Footer */}
+
+                  <div
+                     className="
+                        mt-5
+                        flex
+                        items-center
+                        justify-between
+                     "
+                  >
+
+                     <span
+                        className="
+                           text-sm
+                           font-medium
+                           text-green-700
+                        "
+                     >
+
+                        Click to explore
+
+                     </span>
+
+                     <FaChevronRight
+                        className="
+                           transition-transform
+                           group-hover:translate-x-1
+                        "
+                     />
 
                   </div>
 
                </button>
 
-            ))}
+            );
 
-         </div>
+         })}
 
       </div>
 
