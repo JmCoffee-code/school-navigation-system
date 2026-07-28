@@ -1,135 +1,166 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import NavigationBar from "@/components/Layout/NavigationBar";
-import CampusExplorer from "@/components/Map/CampusExplorer";
+import CampusExplorer from "@/components/Explorer/CampusExplorer";
 import CampusMaps from "@/components/Map/CampusMaps";
 import BuildingDetails from "@/components/Sidebar/BuildingDetails";
 
 import { buildings } from "@/data/buildings";
 import { Building } from "@/types/building";
 
+import { useCampusStore } from "@/store/useCampusStore";
+
 export default function Home() {
 
-   // ============================
-   // Global Application State
-   // ============================
+   // ============================================
+   // Global Store
+   // ============================================
 
-   const [selectedBuilding, setSelectedBuilding] =
-      useState<Building | null>(null);
+   const {
 
-   const [searchQuery, setSearchQuery] =
-      useState("");
+      selectedBuilding,
 
-   const [selectedCategory, setSelectedCategory] =
-      useState("All");
+      setSelectedBuilding,
 
-   const [favorites, setFavorites] =
-      useState<number[]>([]);
+      searchQuery,
 
-   // ============================
-   // Filtered Buildings
-   // ============================
+      setSearchQuery,
+
+      selectedCategory,
+
+      setSelectedCategory,
+
+      favorites,
+
+      toggleFavorite,
+
+   } = useCampusStore();
+
+   // ============================================
+   // Filter Buildings
+   // ============================================
 
    const filteredBuildings = useMemo(() => {
 
       let results = buildings;
 
-      // Category Filter
-
       if (selectedCategory !== "All") {
 
          results = results.filter(
+
             (building) =>
+
                building.category === selectedCategory
+
          );
 
       }
 
-      // Search Filter
-
       if (searchQuery.trim() !== "") {
 
-         results = results.filter((building) =>
-            building.name
-               .toLowerCase()
-               .includes(searchQuery.toLowerCase())
+         results = results.filter(
+
+            (building) =>
+
+               building.name
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase())
+
          );
 
       }
 
       return results;
 
-   }, [searchQuery, selectedCategory]);
+   }, [
 
-   // ============================
-   // Building Selection
-   // ============================
+      searchQuery,
 
-   function handleSelectBuilding(building: Building) {
+      selectedCategory,
+
+   ]);
+
+   // ============================================
+   // Event Handlers
+   // ============================================
+
+   function handleSelectBuilding(
+      building: Building
+   ) {
 
       setSelectedBuilding(building);
 
-      setSearchQuery("");
-
    }
 
-   // ============================
-   // Favorites
-   // ============================
-
-   function toggleFavorite(id: number) {
-
-      setFavorites((previous) =>
-
-         previous.includes(id)
-            ? previous.filter((favorite) => favorite !== id)
-            : [...previous, id]
-
-      );
-
-   }
+   // ============================================
+   // Render
+   // ============================================
 
    return (
 
       <div className="flex h-screen flex-col bg-slate-100">
 
-         {/* ================================= */}
-         {/* Navigation Bar */}
-         {/* ================================= */}
+         {/* Navigation */}
 
-         <NavigationBar />
+         <NavigationBar
 
-         {/* ================================= */}
-         {/* Main Layout */}
-         {/* ================================= */}
+            searchQuery={searchQuery}
 
-         <main className="flex flex-1 gap-6 overflow-hidden p-6">
+            setSearchQuery={setSearchQuery}
 
-            {/* Left */}
+         />
+
+         {/* Main */}
+
+         <main
+            className="
+               flex
+               flex-1
+               gap-6
+               overflow-hidden
+               p-6
+            "
+         >
+
+            {/* Explorer */}
 
             <CampusExplorer
-   buildings={filteredBuildings}
-   selectedBuilding={selectedBuilding}
-   onSelectBuilding={handleSelectBuilding}
-   selectedCategory={selectedCategory}
-   setSelectedCategory={setSelectedCategory}
-   favorites={favorites}
-   toggleFavorite={toggleFavorite}
-   searchQuery={searchQuery}
-   setSearchQuery={setSearchQuery}
-/>
 
-            {/* Center */}
+               buildings={filteredBuildings}
+
+               selectedBuilding={selectedBuilding}
+
+               onSelectBuilding={handleSelectBuilding}
+
+               selectedCategory={selectedCategory}
+
+               setSelectedCategory={setSelectedCategory}
+
+               favorites={favorites}
+
+               toggleFavorite={toggleFavorite}
+
+               searchQuery={searchQuery}
+
+               setSearchQuery={setSearchQuery}
+
+            />
+
+            {/* Map */}
 
             <CampusMaps
-   buildings={filteredBuildings}
-   selectedBuilding={selectedBuilding}
-   setSelectedBuilding={handleSelectBuilding}
-/>
 
-            {/* Right */}
+               buildings={filteredBuildings}
+
+               selectedBuilding={selectedBuilding}
+
+               setSelectedBuilding={handleSelectBuilding}
+
+            />
+
+            {/* Details */}
 
             <BuildingDetails
 
