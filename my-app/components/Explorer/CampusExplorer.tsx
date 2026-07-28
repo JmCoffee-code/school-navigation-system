@@ -16,12 +16,15 @@ interface CampusExplorerProps {
    buildings: Building[];
    selectedBuilding: Building | null;
    onSelectBuilding: (building: Building) => void;
+
    selectedCategory: string;
    setSelectedCategory: (category: string) => void;
+
    favorites: number[];
    toggleFavorite: (id: number) => void;
+
    searchQuery: string;
-   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+   setSearchQuery: (query: string) => void;
 }
 
 export default function CampusExplorer({
@@ -39,16 +42,16 @@ export default function CampusExplorer({
    const categoryCounts = {
       All: buildings.length,
       Academic: buildings.filter(
-         (b) => b.category === "Academic"
+         (building) => building.category === "Academic"
       ).length,
       Facilities: buildings.filter(
-         (b) => b.category === "Facilities"
+         (building) => building.category === "Facilities"
       ).length,
       Sports: buildings.filter(
-         (b) => b.category === "Sports"
+         (building) => building.category === "Sports"
       ).length,
       Parking: buildings.filter(
-         (b) => b.category === "Parking"
+         (building) => building.category === "Parking"
       ).length,
    };
 
@@ -186,13 +189,10 @@ export default function CampusExplorer({
                {categories.map((category) => (
 
                   <button
-
                      key={category.label}
-
                      onClick={() =>
                         setSelectedCategory(category.label)
                      }
-
                      className={`
                         flex
                         w-full
@@ -209,7 +209,6 @@ export default function CampusExplorer({
                               : "hover:bg-slate-100"
                         }
                      `}
-
                   >
 
                      <div className="flex items-center gap-3">

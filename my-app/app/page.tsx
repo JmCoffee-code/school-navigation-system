@@ -3,16 +3,30 @@
 import { useMemo } from "react";
 
 import NavigationBar from "@/components/Layout/NavigationBar";
-import CampusExplorer from "@/components/Explorer/CampusExplorer";
+import CampusExplorer from "../components/Explorer/CampusExplorer";
 import CampusMaps from "@/components/Map/CampusMaps";
 import BuildingDetails from "@/components/Sidebar/BuildingDetails";
 
-import { buildings } from "@/data/buildings";
 import { Building } from "@/types/building";
 
 import { useCampusStore } from "@/store/useCampusStore";
+import useBuildings from "../hooks/useBuildings";
 
 export default function Home() {
+
+   // ============================================
+   // Buildings Hook
+   // ============================================
+
+   const {
+
+      buildings,
+
+      loading,
+
+      error,
+
+   } = useBuildings();
 
    // ============================================
    // Global Store
@@ -76,6 +90,8 @@ export default function Home() {
 
    }, [
 
+      buildings,
+
       searchQuery,
 
       selectedCategory,
@@ -91,6 +107,98 @@ export default function Home() {
    ) {
 
       setSelectedBuilding(building);
+
+   }
+
+   // ============================================
+   // Loading State
+   // ============================================
+
+   if (loading) {
+
+      return (
+
+         <div
+            className="
+               flex
+               h-screen
+               items-center
+               justify-center
+               bg-slate-100
+            "
+         >
+
+            <div className="text-center">
+
+               <h2
+                  className="
+                     text-2xl
+                     font-bold
+                     text-green-700
+                  "
+               >
+
+                  Loading Buildings...
+
+               </h2>
+
+               <p className="mt-2 text-slate-500">
+
+                  Please wait.
+
+               </p>
+
+            </div>
+
+         </div>
+
+      );
+
+   }
+
+   // ============================================
+   // Error State
+   // ============================================
+
+   if (error) {
+
+      return (
+
+         <div
+            className="
+               flex
+               h-screen
+               items-center
+               justify-center
+               bg-slate-100
+            "
+         >
+
+            <div className="text-center">
+
+               <h2
+                  className="
+                     text-2xl
+                     font-bold
+                     text-red-600
+                  "
+               >
+
+                  Failed to Load Buildings
+
+               </h2>
+
+               <p className="mt-2 text-slate-500">
+
+                  {error}
+
+               </p>
+
+            </div>
+
+         </div>
+
+      );
 
    }
 
@@ -160,7 +268,7 @@ export default function Home() {
 
             />
 
-            {/* Details */}
+            {/* Sidebar */}
 
             <BuildingDetails
 
