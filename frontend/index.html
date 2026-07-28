@@ -47,8 +47,17 @@
                     .then(res => res.text())
                     .then(data => {
                         document.getElementById("toolbars").innerHTML = data;
+
+                        // Now the buttons exist, attach listeners
+                        document.getElementById("mainBuildingBtn").addEventListener("click", () => {
+                            updateBuildingInfo("main");
+                        });
+                        document.getElementById("annexBuildingBtn").addEventListener("click", () => {
+                            updateBuildingInfo("annex");
+                        });
                     })
                     .catch(err => console.error("Toolbars load failed:", err));
+
             </script>
 
             <!-- Campus CampusMap -->
@@ -80,7 +89,7 @@
 
     </main>
 
-    <script src="js/script.js"></script>
+    <script src="js/buildingInfo.js"></script>
 
 </body>
 

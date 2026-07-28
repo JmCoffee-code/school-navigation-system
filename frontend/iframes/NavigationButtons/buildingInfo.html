@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <aside
-        class="building-info w-96 bg-white border-l border-gray-200 p-6 flex flex-col justify-between overflow-y-auto">
+        class="building-info w-96 bg-white border-l border-gray-200 p-6 flex flex-col justify-between h-full">
 
     <div class="space-y-6">
 
@@ -14,10 +14,8 @@
 
                     </span>
 
-            <h2 class="text-xl font-bold text-gray-800">
-
+            <h2 id="buildingName" class="text-xl font-bold text-gray-800">
                 Main Building
-
             </h2>
 
             <p class="text-sm text-gray-500">
@@ -37,37 +35,23 @@
 
         <div class="building-details space-y-3">
 
-            <h3
-                    class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
-
-                Key Offices & Rooms
-
+            <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                Offices
             </h3>
+            <ul id="buildingOffices" class="space-y-2 text-sm text-gray-600">
+                <!-- Offices will be injected here by JS -->
+            </ul>
 
-            <ul class="space-y-2 text-sm text-gray-600">
-
-                <li>• Registrar's Office</li>
-
-                <li>• Cashier / Accounting</li>
-
-                <li>• Dean's Office</li>
-
-                <li>• Faculty Lounge</li>
-
+            <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                Rooms
+            </h3>
+            <ul id="buildingRooms" class="space-y-2 text-sm text-gray-600">
+                <!-- Rooms will be injected here by JS -->
             </ul>
 
         </div>
 
     </div>
-
-    <button
-            class="navigate w-full mt-6 bg-green-700 hover:bg-green-800 text-white font-medium py-2.5 rounded-lg flex items-center justify-center gap-2 transition">
-
-        <i class="fa-solid fa-location-arrow"></i>
-
-        Get Directions
-
-    </button>
 
 </aside>
 </html>
