@@ -23,7 +23,7 @@
     <!-- ================= HEADER ================= -->
     <header id="header"></header>
     <script>
-        fetch("iframes/Header/header.html")
+        fetch("iframes/mainIframeComponents/Header/header.html")
             .then(res => res.text())
             .then(data => {
                 document.getElementById("header").innerHTML = data;
@@ -43,7 +43,7 @@
 
             <div id="toolbars"></div>
             <script>
-                fetch("iframes/NavigationButtons/toolbars.html")
+                fetch("iframes/schoolMapFrameComponentsUI/NavigationButtons/toolbars.html")
                     .then(res => res.text())
                     .then(data => {
                         document.getElementById("toolbars").innerHTML = data;
@@ -65,7 +65,7 @@
                 id="map"
                 class="campus-map flex-1 bg-green-50 rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center relative overflow-hidden"></div>
             <script>
-                fetch("iframes/CampusMap/map.html")
+                fetch("iframes/schoolMapFrameComponentsUI/CampusMap/map.html")
                     .then(res => res.text())
                     .then(data => {
                         document.getElementById("map").innerHTML = data;
@@ -79,7 +79,7 @@
 
         <aside id="buildingInfo"></aside>
         <script>
-            fetch("iframes/NavigationButtons/buildingInfo.html")
+            fetch("iframes/schoolMapFrameComponentsUI/NavigationButtons/buildingInfo.html")
                 .then(res => res.text())
                 .then(data => {
                     document.getElementById("buildingInfo").innerHTML = data;
