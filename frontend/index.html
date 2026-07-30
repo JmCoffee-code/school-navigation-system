@@ -42,28 +42,90 @@
             <!-- Toolbar -->
 
             <div id="toolbars"></div>
+
             <script>
+                // building data
+                const buildings = {
+                    main: {
+                        name: "Main Building",
+                        offices: ["Registrar's Office", "Finance Office", "OSA Office", "Research Office",
+                            "Library Office", "Saint Augustine Laboratory and Diagnostic Center"],
+                        rooms: ["Room 1", "Room 2", "Room 3", "Room 4", "Room 5"],
+                        photo: "images/GVCMainBuildingImage.jpg"
+                    },
+                    annex: {
+                        name: "Annex Building",
+                        offices: ["Computer Laboratory 1", "Computer Laboratory 2", "Faculty Office", "Dean's Office"],
+                        rooms: ["Engineering Room 1", "Engineering Room 2", "Engineering Room 3", "Engineering Room 4"],
+                        photo: "images/GVCAnnexBuildingImage.png"
+                    }
+                };
+
+                function updateBuildingInfo(buildingKey) {
+                    const building = buildings[buildingKey];
+                    document.getElementById("buildingName").textContent = building.name;
+
+                    const officesList = document.getElementById("buildingOffices");
+                    officesList.innerHTML = "";
+                    building.offices.forEach(office => {
+                        const li = document.createElement("li");
+                        li.textContent = "• " + office;
+                        officesList.appendChild(li);
+                    });
+
+                    const roomsList = document.getElementById("buildingRooms");
+                    roomsList.innerHTML = "";
+                    building.rooms.forEach(room => {
+                        const li = document.createElement("li");
+                        li.textContent = "• " + room;
+                        roomsList.appendChild(li);
+                    });
+
+                    // Update photo
+                    const photoElement = document.getElementById("buildingPhoto");
+                    photoElement.src = building.photo;
+                }
+
+                function highlightButton(activeBtn) {
+                    const buildingButtons = document.querySelectorAll("#toolbars button");
+                    buildingButtons.forEach(btn => {
+                        btn.classList.remove("bg-green-700", "text-white");
+                        btn.classList.add("hover:bg-gray-100", "text-gray-600");
+                    });
+                    activeBtn.classList.add("bg-green-700", "text-white");
+                    activeBtn.classList.remove("hover:bg-gray-100", "text-gray-600");
+                }
+
+                // fetch toolbar HTML
                 fetch("iframes/schoolMapFrameComponentsUI/NavigationButtons/toolbars.html")
                     .then(res => res.text())
                     .then(data => {
                         document.getElementById("toolbars").innerHTML = data;
 
-                        // Now the buttons exist, attach listeners
-                        document.getElementById("mainBuildingBtn").addEventListener("click", () => {
+                        const mainBtn = document.getElementById("mainBuildingBtn");
+                        const annexBtn = document.getElementById("annexBuildingBtn");
+
+                        mainBtn.addEventListener("click", () => {
                             updateBuildingInfo("main");
+                            highlightButton(mainBtn);
                         });
-                        document.getElementById("annexBuildingBtn").addEventListener("click", () => {
+
+                        annexBtn.addEventListener("click", () => {
                             updateBuildingInfo("annex");
+                            highlightButton(annexBtn);
                         });
                     })
                     .catch(err => console.error("Toolbars load failed:", err));
-
             </script>
+
 
             <!-- Campus CampusMap -->
             <div
-                id="map"
-                class="campus-map flex-1 bg-green-50 rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center relative overflow-hidden"></div>
+                    id="map"
+                    class="campus-map bg-green-50 rounded-xl border-2 border-dashed border-gray-200 items-center relative overflow-hidden"
+                    style="position:relative; width:100%; aspect-ratio:16/9;">
+            </div>
+
             <script>
                 fetch("iframes/schoolMapFrameComponentsUI/CampusMap/map.html")
                     .then(res => res.text())
