@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 
-import NavigationBar from "@/components/Layout/NavigationBar";
 import CampusExplorer from "../components/Explorer/CampusExplorer";
 import CampusMaps from "@/components/Map/CampusMaps";
 import BuildingDetails from "@/components/Sidebar/BuildingDetails";
@@ -11,6 +10,7 @@ import { Building } from "@/types/building";
 
 import { useCampusStore } from "@/store/useCampusStore";
 import useBuildings from "../hooks/useBuildings";
+import NavigationBar from "@/components/layout/NavigationBar";
 
 export default function Home() {
 
